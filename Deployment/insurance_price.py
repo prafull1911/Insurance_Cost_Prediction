@@ -1,18 +1,30 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import joblib
 import pickle
 
-st.markdown("""
-            ## A Glimpse of Insurance Cost Prediction Data
-            """)
+# Set page title and layout
+st.set_page_config(page_title="Insurance Cost Prediction", layout="wide")
 
+# Main title
+st.title("Insurance Cost Prediction App")
+st.markdown("""
+    Welcome to the Insurance Cost Prediction app! 
+    Please enter the required features on the left sidebar for your premium price prediction.
+""")
+
+# Load the dataset
 price_df = pd.read_csv("D:\Portfolio_Project\insurance.csv")
 
+# Display dataset
+st.header("Dataset Overview")
 st.dataframe(price_df.head())
 
+# Sidebar for user input
 st.sidebar.header("Enter the Features for Prediction")
 
+# User input fields
 age = st.sidebar.number_input("Age", min_value=0, max_value=120, value=30, step=1)
 diabetes = st.sidebar.selectbox("Diabetes", options=[0, 1], format_func=lambda x: "Yes" if x == 1 else "No")
 blood_pressure_problems = st.sidebar.selectbox("Blood Pressure Problems", options=[0, 1], format_func=lambda x: "Yes" if x == 1 else "No")
@@ -26,10 +38,23 @@ number_of_major_surgeries = st.sidebar.selectbox("Number of Major Surgeries", op
 
 # Calculate BMI
 bmi = round(weight * 10000 / (height ** 2), 2)
-st.sidebar.write(f"Calculated BMI: {bmi}")
+st.sidebar.write(f"**Calculated BMI:** {bmi}")
 
+# Prepare input data
 input_data = np.array([[age, diabetes, blood_pressure_problems, any_transplants, any_chronic_diseases, 
                         known_allergies, history_of_cancer_in_family, number_of_major_surgeries, bmi]])
 
+# Load the scaler
+scaler = joblib.load("robust_scaler.pkl")
+
+# Scale input data
+input_data_scaled = scaler.transform(input_data)
+
+# Load the model
 with open("best_gbdt_regressor.pkl", "rb") as model_file:
     model = pickle.load(model_file)
+
+# Prediction button
+if st.sidebar.button("Predict Premium Price"):
+    prediction = model.predict(input_data_scaled)
+    st.success(f"### Predicted Premium Price: **₹{prediction[0]:.2f}**")
