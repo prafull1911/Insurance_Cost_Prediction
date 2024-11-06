@@ -49,7 +49,7 @@ st.markdown("""
 
 # Load and display data
 try:
-    price_df = pd.read_csv("insurance.csv")
+    price_df = pd.read_csv("./insurance.csv")
     st.markdown("## A Glimpse of Insurance Cost Prediction Data")
     st.dataframe(price_df.head())
 except FileNotFoundError:
