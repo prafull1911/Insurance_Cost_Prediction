@@ -108,7 +108,6 @@ New features were derived from existing ones to enhance predictive power. This s
 The model utilized **Ensembling Techniques** to improve accuracy:
 - **Bagging**: Implemented using **Random Forest Regressor**.
 - **Boosting**: Applied **Gradient Boosting Decision Tree (GBDT)** and **XGBoost**.
-- **Support Vector Regressor** : Used **SVR** with **RBF-Kernel**.
 - **Hyperparameter Tuning**: GridSearchCV was used to optimize model parameters for each technique.
 
 ## Model Performance Comparison
@@ -118,11 +117,8 @@ Each model was evaluated on key metrics to compare performance and select the be
 The insurance premium prediction model leverages health and demographic data to provide a data-driven pricing strategy. By aligning premiums with individual health profiles, this model assists insurers in creating personalized and fair offerings.
 
 ## GitHub Repository and Tableau Dashboard
-- Access the code and dataset [here](#) on GitHub.
-- The interactive **Tableau Dashboard** visualizes key insights, such as premium pricing trends and feature impacts.
+- Access the code and dataset on [GitHub](https://github.com/prafull1911/Insurance_Cost_Prediction).
+- Explore the interactive **Tableau Dashboard** for insights on premium pricing trends and feature impacts: [Insurance Premium Dashboard](https://public.tableau.com/app/profile/prafull.almale/viz/Insurance_sample_17282171342300/Insurance_Premium_Dashboard).
 
 ## Deployment
-The model was deployed using **Streamlit** for an interactive user interface, allowing users to input health-related attributes and receive premium price predictions in real-time.
-
-
- 
+The model was deployed using **Streamlit** for an interactive user interface, allowing users to input health-related attributes and receive premium price predictions in real-time. Check it out here: [Insurance Cost Prediction App](https://prafull1911-insurance-cost-pre-deploymentinsurance-price-9fnwrb.streamlit.app/).
