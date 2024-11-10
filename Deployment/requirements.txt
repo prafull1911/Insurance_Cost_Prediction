@@ -3,5 +3,4 @@ pandas
 scikit-learn
 joblib
 xgboost
-pickle
 streamlit
