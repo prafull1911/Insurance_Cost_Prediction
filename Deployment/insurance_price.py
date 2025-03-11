@@ -238,21 +238,34 @@ input_data = np.array([[age, diabetes, blood_pressure_problems, any_transplants,
                         known_allergies, history_of_cancer_in_family, number_of_major_surgeries, bmi]])
 
 # Load Scaler
+scaler = None
 try:
     scaler = joblib.load("robust_scaler.pkl")
     input_data_scaled = scaler.transform(input_data)
 except FileNotFoundError:
     st.error("Scaler file not found. Ensure 'robust_scaler.pkl' is available.")
-    input_data_scaled = input_data  # Fallback if scaler fails
+    input_data_scaled = input_data  # Fallback if scaler is missing
+except Exception as e:
+    st.error(f"Error loading scaler: {e}")
+    input_data_scaled = input_data  # Continue without scaling
 
 # Load Model using Joblib
+model = None
 try:
-    model = joblib.load("best_gbdt_regressor.joblib")
-
-    if st.sidebar.button("Predict Premium Price"):
-        prediction = model.predict(input_data_scaled)
-        st.write(f"### Predicted Premium Price: {prediction[0]:.2f} Rs.")
+    model = joblib.load("best_gbdt_regressor.joblib", fix_imports=True)
 except FileNotFoundError:
     st.error("Model file not found. Ensure 'best_gbdt_regressor.joblib' is available.")
 except Exception as e:
     st.error(f"Error loading model: {e}")
+
+# Prediction Button
+if st.sidebar.button("Predict Premium Price"):
+    if model is not None:
+        try:
+            prediction = model.predict(input_data_scaled)
+            st.write(f"### Predicted Premium Price: {prediction[0]:.2f} Rs.")
+        except Exception as e:
+            st.error(f"Prediction error: {e}")
+    else:
+        st.warning("Prediction unavailable due to missing or invalid model.")
+
