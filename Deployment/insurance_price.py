@@ -252,7 +252,7 @@ except Exception as e:
 # Load Model using Joblib
 model = None
 try:
-    model = joblib.load("D:\GitHub\Insurance_Cost_Prediction\best_gbdt_regressor.joblib")
+    model = joblib.load("best_gbdt_regressor.joblib")
 except FileNotFoundError:
     st.error("Model file not found. Ensure 'best_gbdt_regressor.joblib' is available.")
 except Exception as e:
