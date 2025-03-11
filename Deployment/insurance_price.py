@@ -247,7 +247,7 @@ except FileNotFoundError:
 
 # Load Model using Joblib
 try:
-    model = joblib.load("best_gbdt_regressor.joblib")
+    model = joblib.load("../best_gbdt_regressor.joblib")
 
     if st.sidebar.button("Predict Premium Price"):
         prediction = model.predict(input_data_scaled)
